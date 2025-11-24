@@ -24,4 +24,5 @@ class User(SQLModel, table=True):
     username: str = Field(min_length=3, max_length=50, unique=True)
     email: str = Field(min_length=4, max_length=100, unique=True)
     password: str = Field(min_length=3, max_length=200)
+    notes_id: str = Field(default=None, foreign_key="Notes.id")
     notes: List["Notes"] = Relationship(back_populates="owner")
