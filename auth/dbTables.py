@@ -32,4 +32,6 @@ class Notes(SQLModel, table=True):
     content: str = Field(min_length=5, max_length=20000)
 
     owner_id: str = Field(default=None, foreign_key="user.id", nullable=True)
-    owner: Optional["User"] = Relationship(back_populates="notes")
+    owner: Optional["User"] = Relationship(
+        back_populates="notes",
+    )
