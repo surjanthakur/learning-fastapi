@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session, select
 from dbConnection import get_session
 from dbTables import Notes
-from typing import List
 from pydanticModels import ShowNotes
 
 
@@ -10,7 +9,7 @@ router = APIRouter(prefix="/notes", tags=["notes"])
 
 
 # Endpoint to get all notes
-@router.get("/all", response_model=List[ShowNotes])
+@router.get("/all")
 def get_all_notes(session_db: Session = Depends(get_session)):
     try:
         all_notes = session_db.exec(select(Notes)).all()
@@ -29,19 +28,16 @@ def get_all_notes(session_db: Session = Depends(get_session)):
 # Endpoint to create a new note
 @router.post("/create/{user_id}", response_model=ShowNotes)
 def create_new_note(
-    user_id: str, notes: ShowNotes, session_db: Session = Depends(get_session)
+    user_id: str, notes_data: Notes, session_db: Session = Depends(get_session)
 ):
     try:
-        new_notes = Notes(title=notes.title, content=notes.content)
-        if user_id == new_notes.owner_id:
-            session_db.add(new_notes)
-            session_db.commit()
-            session_db.refresh(new_notes)
-            return notes
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="You are not authorized to create notes for this user 😳",
+        new_notes = Notes(
+            title=notes_data.title, content=notes_data.content, owner_id=user_id
         )
+        session_db.add(new_notes)
+        session_db.commit()
+        session_db.refresh(new_notes)
+        return new_notes
     except Exception as err:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
