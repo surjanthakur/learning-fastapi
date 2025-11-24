@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from dbConnection import create_db_and_tables
 from contextlib import asynccontextmanager
-from router import notes
+from router import notes, auth
 
 
 @asynccontextmanager
@@ -15,3 +15,4 @@ app = FastAPI(lifespan=lifespan)
 
 # Include the notes router
 app.include_router(notes.router)
+app.include_router(auth.router)

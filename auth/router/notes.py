@@ -33,7 +33,7 @@ def create_new_note(
 ):
     try:
         new_notes = Notes(title=notes.title, content=notes.content)
-        if new_notes.owner_id == user_id:
+        if user_id == new_notes.owner_id:
             session_db.add(new_notes)
             session_db.commit()
             session_db.refresh(new_notes)

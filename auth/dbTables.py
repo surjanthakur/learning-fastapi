@@ -14,7 +14,7 @@ class Notes(SQLModel, table=True):
     id: str = Field(primary_key=True, default_factory=generate_id)
     title: str = Field(min_length=1, max_length=100)
     content: str = Field(min_length=5, max_length=20000)
-    owner_id: str = Field(default=None, foreign_key="user.id")
+    owner_id: str = Field(default=None, foreign_key="User.id")
     owner: Optional["User"] = Relationship(back_populates="notes")
 
 
