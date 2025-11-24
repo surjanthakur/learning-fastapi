@@ -11,9 +11,9 @@ def generate_id() -> str:
 
 # Table for storing users --------------------------------------------------------------->
 class User(SQLModel, table=True):
-    id: str = Field(primary_key=True, default_factory=generate_id)
+    id: str = Field(default_factory=generate_id)
     username: str = Field(min_length=3, max_length=50, unique=True)
-    email: str = Field(min_length=4, max_length=100, unique=True)
+    email: str = Field(primary_key=True, min_length=4, max_length=100, unique=True)
     password: str = Field(min_length=3, max_length=200)
 
     notes: List["Notes"] = Relationship(
@@ -31,7 +31,7 @@ class Notes(SQLModel, table=True):
     title: str = Field(min_length=1, max_length=100)
     content: str = Field(min_length=5, max_length=20000)
 
-    owner_id: str = Field(default=None, foreign_key="user.id", nullable=True)
+    owner_email: str = Field(default=None, foreign_key="user.email", nullable=True)
     owner: Optional["User"] = Relationship(
         back_populates="notes",
     )

@@ -26,13 +26,13 @@ def get_all_notes(session_db: Session = Depends(get_session)):
 
 
 # Endpoint to create a new note
-@router.post("/create/{user_id}", response_model=ShowNotes)
+@router.post("/create/{user_email}", response_model=ShowNotes)
 def create_new_note(
-    user_id: str, notes_data: Notes, session_db: Session = Depends(get_session)
+    user_email: str, notes_data: Notes, session_db: Session = Depends(get_session)
 ):
     try:
         new_notes = Notes(
-            title=notes_data.title, content=notes_data.content, owner_id=user_id
+            title=notes_data.title, content=notes_data.content, owner_email=user_email
         )
         session_db.add(new_notes)
         session_db.commit()
