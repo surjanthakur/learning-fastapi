@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session, select
 from dbConnection import get_session
 from dbTables import Notes
-from pydanticModels import ShowNotes
+from pydanticModels import ShowNotes, InputNotes
 
 
 router = APIRouter(prefix="/notes", tags=["notes"])
@@ -26,13 +26,11 @@ def get_all_notes(session_db: Session = Depends(get_session)):
 
 
 # Endpoint to create a new note
-@router.post("/create/{user_email}", response_model=ShowNotes)
-def create_new_note(
-    user_email: str, notes_data: Notes, session_db: Session = Depends(get_session)
-):
+@router.post("/create", response_model=ShowNotes)
+def create_new_note(notes_data: InputNotes, session_db: Session = Depends(get_session)):
     try:
         new_notes = Notes(
-            title=notes_data.title, content=notes_data.content, owner_email=user_email
+            title=notes_data.title, content=notes_data.content, owner=notes_data.owner
         )
         session_db.add(new_notes)
         session_db.commit()
