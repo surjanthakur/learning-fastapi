@@ -11,13 +11,13 @@ def load_data():
     return result
 
 
-@app.get("/all-patient")
+@app.get("/patients")
 def get_all_patients():
     data = load_data()
     return {f"all-patients: {data}"}
 
 
-@app.get("/patient/{id}")
+@app.get("/patients/{id}")
 def get_patient_by_id(
     id: str = Path(
         ...,
@@ -37,30 +37,6 @@ def get_patient_by_id(
         )
 
 
-@app.get("/sort")
-def sort_patient(
-    sort_by: str = Query(..., description="sort by based on: weight,height,bmi"),
-    order: str = Query("asc", description="sort in asc. or desc. order"),
-):
-    valid_fields = ["height", "weight", "bmi"]
-
-    if sort_by not in valid_fields:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="provided field is wrong enter valide data pls.🙏🏻",
-        )
-
-    if order not in ["asc", "desc"]:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="provided field is wrong enter valide data pls.🙏🏻",
-        )
-
-    data = load_data()
-    sort_order = True if order == "desc" else False
-
-    sorted_data = sorted(
-        data.values(), key=lambda x: x.get(sort_by, 0), reverse=sort_order
-    )
-
-    return sorted_data
+@app.post("/patients/create")
+def create_patient():
+    pass
