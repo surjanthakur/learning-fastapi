@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from data_validation import Patient_data
 import json
 
 app = FastAPI()
