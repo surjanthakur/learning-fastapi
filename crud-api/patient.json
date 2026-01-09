@@ -1,37 +1,33 @@
 {
-  "patients": [
-    {
-      "patient_id": "p001",
-      "name": "Rahul Sharma",
-      "age": 28,
-      "gender": "Male",
-      "blood_group": "O+",
-      "phone": "9876543210",
-      "address": "Delhi, India",
-      "disease": "Fever",
-      "admitted": true
-    },
-    {
-      "patient_id": "p002",
-      "name": "Anjali Verma",
-      "age": 35,
-      "gender": "Female",
-      "blood_group": "A+",
-      "phone": "9123456789",
-      "address": "Jaipur, India",
-      "disease": "Diabetes",
-      "admitted": false
-    },
-    {
-      "patient_id": "p003",
-      "name": "Mohit Singh",
-      "age": 42,
-      "gender": "Male",
-      "blood_group": "B+",
-      "phone": "9012345678",
-      "address": "Chandigarh, India",
-      "disease": "Blood Pressure",
-      "admitted": true
-    }
-  ]
+  "p001": {
+    "name": "Rahul Sharma",
+    "age": 28,
+    "gender": "Male",
+    "blood_group": "O+",
+    "phone": "9876543210",
+    "address": "Delhi, India",
+    "disease": "Fever",
+    "admitted": true
+  },
+  "p002": {
+    "patient_id": "p002",
+    "name": "Anjali Verma",
+    "age": 35,
+    "gender": "Female",
+    "blood_group": "A+",
+    "phone": "9123456789",
+    "address": "Jaipur, India",
+    "disease": "Diabetes",
+    "admitted": false
+  },
+  "p003": {
+    "name": "Mohit Singh",
+    "age": 42,
+    "gender": "Male",
+    "blood_group": "B+",
+    "phone": "9012345678",
+    "address": "Chandigarh, India",
+    "disease": "Blood Pressure",
+    "admitted": true
+  }
 }
