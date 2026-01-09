@@ -18,8 +18,6 @@ class Patient(BaseModel):
     age: int = Field(gt=0, lt=100)
     gender: str = Field(min_length=4, max_length=7)
     blood_group: str = Field(min_length=1, max_length=3)
-    disease: Optional[List[str]] = (
-        None  # when you add optional add default value [None]
-    )
+    disease: Optional[List[str]] = None
     admitted: bool
     contact_details: Dict[str, str]
