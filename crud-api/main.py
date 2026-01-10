@@ -110,3 +110,6 @@ def update_patients(id: str, patient_update: Patient_update):
         existing_patient[key] = value
     data[id] = existing_patient
     save_data(data)
+    return JSONResponse(
+        status_code=status.HTTP_200_OK, content=f"patient {id} updated successfully!"
+    )
