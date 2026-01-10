@@ -1,23 +1,21 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, computed_field
 from typing import List, Dict, Optional, Annotated
 
 
 class Patient(BaseModel):
-    name: Annotated[
-        str,
-        Field(
-            min_length=3,
-            max_length=50,
-            title="name of the patient",
-            description="add name in less then 50 characters",
-            examples=["amit", "roy"],
-        ),
-    ]
+    id: str
+    name: str
     email: EmailStr
-    weight: float = Field(gt=0)
-    age: int = Field(gt=0, lt=100)
-    gender: str = Field(min_length=4, max_length=7)
-    blood_group: str = Field(min_length=1, max_length=3)
+    weight: float
+    age: int
+    gender: str
+    blood_group: str
     disease: Optional[List[str]] = None
     admitted: bool
-    contact_details: Dict[str, str]
+
+
+@computed_field
+@property
+def bmi(self) -> float:
+    bmi = round(self.weight / (self.height**2), 2)
+    return bmi

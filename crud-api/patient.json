@@ -8,12 +8,8 @@
     "blood_group": "O+",
     "disease": ["fever", "cough"],
     "admitted": true,
-    "contact_details": {
-      "phone": "9876543210",
-      "city": "Delhi"
-    }
+    "contact_details": { "phone": "9876543210", "city": "Delhi" }
   },
-
   "p002": {
     "name": "Rohit Verma",
     "email": "rohit.verma@example.com",
@@ -23,12 +19,8 @@
     "blood_group": "A+",
     "disease": ["diabetes"],
     "admitted": false,
-    "contact_details": {
-      "phone": "9123456789",
-      "city": "Mumbai"
-    }
+    "contact_details": { "phone": "9123456789", "city": "Mumbai" }
   },
-
   "p003": {
     "name": "Sneha Kapoor",
     "email": "sneha.kapoor@example.com",
@@ -38,12 +30,8 @@
     "blood_group": "B+",
     "disease": null,
     "admitted": false,
-    "contact_details": {
-      "phone": "9012345678",
-      "city": "Bangalore"
-    }
+    "contact_details": { "phone": "9012345678", "city": "Bangalore" }
   },
-
   "p004": {
     "name": "Anjali Singh",
     "email": "anjali.singh@example.com",
@@ -53,9 +41,16 @@
     "blood_group": "AB+",
     "disease": ["hypertension", "asthma"],
     "admitted": true,
-    "contact_details": {
-      "phone": "9988776655",
-      "city": "Lucknow"
-    }
+    "contact_details": { "phone": "9988776655", "city": "Lucknow" }
+  },
+  "p005": {
+    "name": "Amit Sharma",
+    "email": "amit.sharma@gmail.com",
+    "weight": 68.5,
+    "age": 32,
+    "gender": "male",
+    "blood_group": "B+",
+    "disease": ["Hypertension", "Diabetes"],
+    "admitted": true
   }
 }
