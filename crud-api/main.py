@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Path, HTTPException, status, Query
 from fastapi.responses import JSONResponse
 import json
-from pydantic_schema import Patient
+from pydantic_schema import Patient, Patient_update
 
 app = FastAPI()
 
@@ -97,5 +97,5 @@ def create_patient(patient_data: Patient):
 
 
 @app.put("/patients/{id}/update")
-def update_patients():
+def update_patients(id: str, patient_update: Patient_update):
     pass
