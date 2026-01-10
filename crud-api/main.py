@@ -94,3 +94,8 @@ def create_patient(patient_data: Patient):
     return JSONResponse(
         status_code=status.HTTP_201_CREATED, content="patient created successfully"
     )
+
+
+@app.put("/patients/{id}/update")
+def update_patients():
+    pass
