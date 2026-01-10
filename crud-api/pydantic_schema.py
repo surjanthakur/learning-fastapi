@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr, Field, computed_field
-from typing import List, Dict, Optional, Annotated, Literal
+from typing import List, Optional, Literal
 
 
 class Patient(BaseModel):

@@ -98,4 +98,15 @@ def create_patient(patient_data: Patient):
 
 @app.put("/patients/{id}/update")
 def update_patients(id: str, patient_update: Patient_update):
-    pass
+    data = load_data()
+    if id not in data:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="invalide id plz enter a valid id.",
+        )
+    existing_patient = data[id]
+    updated_patient_info = patient_update.model_dump(exclude_unset=True)
+    for key, value in updated_patient_info.items():
+        existing_patient[key] = value
+    data[id] = existing_patient
+    save_data(data)
