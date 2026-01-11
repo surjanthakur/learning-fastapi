@@ -32,5 +32,5 @@ class Patient_update(BaseModel):
 
 class Tweety(BaseModel):
     id: str
-    username: str = Field(min_length=5, max_length=60)
-    content: str = Field(min_length=10, max_length=300)
+    username: str = Field(..., min_length=5, max_length=60)
+    content: str = Field(..., min_length=10, max_length=300)
