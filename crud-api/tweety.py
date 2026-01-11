@@ -2,7 +2,7 @@ from fastapi import FastAPI, status, HTTPException, Query
 from fastapi.responses import JSONResponse
 import json
 import uuid
-from pydantic_schema import Tweety
+from pydantic_schema import Tweety, Tweety_update
 
 app = FastAPI()
 
@@ -25,12 +25,26 @@ def get_all_tweets():
 
 
 @app.get("/tweets/sort")
-def sorted_tweets(sort_by: str = Query(title="get tweets base on username")):
+def sorted_tweets(
+    sort_by: str = Query(
+        title="get tweets base on username",
+        description="enter username to access his all tweets",
+    )
+):
     tweets = load_tweets()
     usernames = []
     for tweet in tweets:
         usernames.append(tweet["username"])
-    print(usernames)
+
+    if sort_by not in usernames:
+        raise HTTPException(
+            status_code=status.HTTP_204_NO_CONTENT,
+            detail="no content for this user provide a valid user👻",
+        )
+    else:
+        for tweet in tweets:
+            if sort_by == tweet["username"]:
+                yield {"tweet": tweet["content"]}
 
 
 @app.post("/tweets/create")
@@ -46,3 +60,8 @@ def create_tweet(tweet_data: Tweety):
     return JSONResponse(
         status_code=status.HTTP_200_OK, content="tweet created successfully"
     )
+
+
+@app.put("/tweets/{id}/update")
+def update_tweet(tweet_id: str, update_data: Tweety_update):
+    tweets = load_tweets()
