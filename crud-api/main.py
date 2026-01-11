@@ -113,3 +113,18 @@ def update_patients(id: str, patient_update: Patient_update):
     return JSONResponse(
         status_code=status.HTTP_200_OK, content=f"patient {id} updated successfully!"
     )
+
+
+@app.delete("/patients/{id}/delete")
+def delete_patient(id: str):
+    data = load_data()
+    if id not in data:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="invalid patient id enter valid id!",
+        )
+    del data[id]
+    save_data(data)
+    return JSONResponse(
+        status_code=status.HTTP_200_OK, content=f"patient {id} deleted🔻 successfully!"
+    )

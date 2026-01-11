@@ -1,15 +1,4 @@
 {
-  "p001": {
-    "name": "sumit thakur",
-    "email": "sumit@gmail.com",
-    "weight": 0.0,
-    "age": 0,
-    "gender": "male",
-    "blood_group": "O+",
-    "disease": ["string"],
-    "admitted": true,
-    "contact_details": { "phone": "9876543210", "city": "Delhi" }
-  },
   "p002": {
     "name": "roy lee",
     "email": "user@example.com",

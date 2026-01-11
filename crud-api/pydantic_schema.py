@@ -28,3 +28,9 @@ class Patient_update(BaseModel):
     age: Optional[int] = Field(default=None)
     disease: Optional[List[str]] = None
     admitted: Optional[bool] = Field(default=None)
+
+
+class Tweety(BaseModel):
+    id: str
+    username: str = Field(min_length=5, max_length=60)
+    content: str = Field(min_length=10, max_length=300)
