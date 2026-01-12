@@ -73,8 +73,8 @@ def update_user(
 
     updated_dict = user_data.model_dump(exclude_unset=True)
     user_info = data[id]
-    for key, value in updated_dict:
-        user_info[key] = value
+    for k, v in updated_dict.items():
+        user_info[k] = v
 
     data[id] = user_info
     save_data(data=data)

@@ -1,10 +1,10 @@
 {
   "u001": {
-    "name": "Amit",
-    "age": 24,
-    "city": "Delhi",
-    "work_role": "Backend Dev",
-    "email": "amit.dev@example.com",
+    "name": "test_o1",
+    "age": 19,
+    "city": "string",
+    "work_role": "string",
+    "email": "user@example.com",
     "address": {
       "street": "Lajpat Nagar",
       "state": "Delhi",
