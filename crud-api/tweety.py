@@ -7,23 +7,27 @@ from pydantic_schema import Tweety, Tweety_update
 app = FastAPI()
 
 
+# load all-tweets.
 def load_tweets():
     with open("tweety.json", "r") as file:
         result = json.load(file)
     return result
 
 
+# save tweets in json file.
 def save_tweets(data):
     with open("tweety.json", "w") as file:
         json.dump(data, file)
 
 
+# access all tweets
 @app.get("/tweets")
 def get_all_tweets():
     data = load_tweets()
     return JSONResponse(status_code=status.HTTP_200_OK, content=data)
 
 
+# sort tweets by username
 @app.get("/tweets/sort")
 def sorted_tweets(
     sort_by: str = Query(
@@ -47,6 +51,7 @@ def sorted_tweets(
                 yield {"tweet": tweet["content"]}
 
 
+# create a new tweet
 @app.post("/tweets/create")
 def create_tweet(tweet_data: Tweety):
     data = load_tweets()
@@ -62,7 +67,7 @@ def create_tweet(tweet_data: Tweety):
     )
 
 
-# update tweet by id
+#  update tweet by id
 @app.put("/tweets/{tweet_id}/update")
 def update_tweet(tweet_id: str, update_data: Tweety_update):
     all_tweets = load_tweets()
@@ -76,7 +81,7 @@ def update_tweet(tweet_id: str, update_data: Tweety_update):
             updated = True
             break
 
-    if not updated:
+    if updated == False:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"invalid id: {tweet_id}  ,cant update tweet enter the valid id please.",
