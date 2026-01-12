@@ -91,3 +91,26 @@ def update_tweet(tweet_id: str, update_data: Tweety_update):
         status_code=status.HTTP_200_OK,
         content=f"tweet: {tweet_id} updated successfully👻",
     )
+
+
+# delete tweet by id
+@app.delete("/tweets/{id}/delete")
+def delete_tweets(id: str):
+    tweets = load_tweets()
+    is_deleted = False
+    for idx, tweet in enumerate(tweets):
+        if tweet["id"] == id:
+            del tweets[idx]
+            is_deleted = True
+            break
+
+    if is_deleted == False:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"invalid id: {id}  ,cant delete tweet enter the valid id please.",
+        )
+    save_tweets(tweets)
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content=f"tweet: {id} deleted successfully👻",
+    )

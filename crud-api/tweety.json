@@ -1,15 +1,5 @@
 [
   {
-    "id": "t001",
-    "username": "code_monkey",
-    "content": "this is the demo code for testing tweet"
-  },
-  {
-    "id": "t002",
-    "username": "ai_builder",
-    "content": "this is the demo excersize"
-  },
-  {
     "id": "t003",
     "username": "fastapi_fan",
     "content": "FastAPI feels like the old Unix philosophy: do one thing and do it well."
