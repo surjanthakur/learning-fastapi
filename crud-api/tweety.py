@@ -62,6 +62,27 @@ def create_tweet(tweet_data: Tweety):
     )
 
 
-@app.put("/tweets/{id}/update")
+# update tweet by id
+@app.put("/tweets/{tweet_id}/update")
 def update_tweet(tweet_id: str, update_data: Tweety_update):
-    tweets = load_tweets()
+    all_tweets = load_tweets()
+    updated = False
+    for idx, tweet in enumerate(all_tweets):
+        if tweet["id"] == tweet_id:
+            updated_tweet = update_data.model_dump(exclude_unset=True)
+            for k, v in updated_tweet.items():
+                tweet[k] = v
+            all_tweets[idx] = tweet
+            updated = True
+            break
+
+    if not updated:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"invalid id: {tweet_id}  ,cant update tweet enter the valid id please.",
+        )
+    save_tweets(all_tweets)
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content=f"tweet: {tweet_id} updated successfully👻",
+    )

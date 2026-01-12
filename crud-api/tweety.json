@@ -2,7 +2,7 @@
   {
     "id": "t001",
     "username": "code_monkey",
-    "content": "Writing Python every day keeps the bugs away. Simple logic beats clever hacks."
+    "content": "this is the demo code for testing tweet"
   },
   {
     "id": "t002",
@@ -28,5 +28,10 @@
     "id": "8706878c-eb4c-46da-ba7f-74e34a018b23",
     "username": "surjan",
     "content": "this is bot a valid tweeet just a test"
+  },
+  {
+    "id": "t001",
+    "username": "code_monkey",
+    "content": "this is the demo code"
   }
 ]
