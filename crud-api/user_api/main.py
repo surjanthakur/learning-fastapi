@@ -1,7 +1,7 @@
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, status, Path
 from fastapi.responses import JSONResponse
 import json
-from pydantic_schema import User
+from pydantic_schema import User, User_update
 
 app = FastAPI()
 
@@ -57,3 +57,27 @@ def get_user(id: str):
 
     user_data = data[id]
     return JSONResponse(status_code=status.HTTP_200_OK, content=user_data)
+
+
+@app.put("/users/{id}/update")
+def update_user(
+    user_data: User_update,
+    id: str = Path(title="enter user is exp: u001 ,u010", min_length=4, max_length=7),
+):
+    data = load_data()
+    if id not in data:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="invalid user id enter a valid id",
+        )
+
+    updated_dict = user_data.model_dump(exclude_unset=True)
+    user_info = data[id]
+    for key, value in updated_dict:
+        user_info[key] = value
+
+    data[id] = user_info
+    save_data(data=data)
+    return JSONResponse(
+        status_code=status.HTTP_200_OK, content=f"user: {id} updated successfully!!"
+    )
