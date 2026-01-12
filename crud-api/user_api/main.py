@@ -35,7 +35,7 @@ def create_user(user_data: User):
     if user_data.id in data:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="enter valid  id this might be wrong !!",
+            detail="enter valid id this might be wrong !!",
         )
     data[user_data.id] = user_data.model_dump(exclude=["id"])
     save_data(data=data)
