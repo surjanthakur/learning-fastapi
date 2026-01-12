@@ -1,16 +1,4 @@
 {
-  "u001": {
-    "name": "test_o1",
-    "age": 19,
-    "city": "string",
-    "work_role": "string",
-    "email": "user@example.com",
-    "address": {
-      "street": "Lajpat Nagar",
-      "state": "Delhi",
-      "pincode": "110024"
-    }
-  },
   "u002": {
     "name": "Rohit",
     "age": 28,
