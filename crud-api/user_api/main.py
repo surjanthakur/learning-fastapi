@@ -43,3 +43,17 @@ def create_user(user_data: User):
         status_code=status.HTTP_200_OK,
         content=f"user {user_data.name} created successfully",
     )
+
+
+# get user by id
+@app.get("/users/{id}")
+def get_user(id: str):
+    data = load_data()
+    if id not in data:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="invalid user id enter a valid id!!",
+        )
+
+    user_data = data[id]
+    return JSONResponse(status_code=status.HTTP_200_OK, content=user_data)
