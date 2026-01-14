@@ -24,7 +24,7 @@ def save_tweets(data):
 @app.get("/tweets")
 def get_all_tweets():
     data = load_tweets()
-    return JSONResponse(status_code=status.HTTP_200_OK, content=data)
+    return JSONResponse(status_code=status.HTTP_101_SWITCHING_PROTOCOLS, content=data)
 
 
 # sort tweets by username
