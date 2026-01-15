@@ -101,7 +101,7 @@ def update_patients(id: str, patient_update: Patient_update):
     data = load_data()
     if id not in data:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_100_CONTINUE,
             detail="invalide id plz enter a valid id.",
         )
     existing_patient = data[id]
