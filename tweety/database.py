@@ -1,14 +1,11 @@
 # This file handles database setup, connection and session management for the Tweety app.
-
-from fastapi import Depends, FastAPI, HTTPException, Query
-from sqlmodel import Session, SQLModel, create_engine, select
+from sqlmodel import Session, SQLModel, create_engine
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 
 DB_URL = os.getenv("DB_URL")
-print(DB_URL)
 
 engine = create_engine(DB_URL)
 

@@ -1,6 +1,6 @@
 from pydantic import EmailStr
 import datetime
-from sqlmodel import Field, Session, SQLModel, create_engine, select, table, true
+from sqlmodel import Field, SQLModel
 
 
 class User(SQLModel, table=True):
