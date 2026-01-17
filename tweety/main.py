@@ -23,13 +23,6 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
-# get all tweets
-@app.get("/tweets")
-def get_all_tweets(db: Session = Depends(get_session)):
-    all_tweets = db.exec(select(Tweet)).all()
-    return all_tweets
-
-
 # get user by their id
 @app.get("/users/{user_id}")
 def get_user_by_id(
@@ -95,7 +88,7 @@ def update_user_by_id(
 
 
 # delete user by id
-@app.delete("/users/{id}/delete")
+@app.delete("/users/{user_id}/delete")
 def delete_user_by_id(
     user_id: str = Path(..., description="enter the user id to update information !!"),
     db: Session = Depends(get_session),
