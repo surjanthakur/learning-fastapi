@@ -13,7 +13,7 @@ class User(SQLModel, table=True):
         back_populates="user", sa_relationship_kwargs={"cascade": "all, delete-orphan"}
     )
     created_at: datetime = Field(default_factory=datetime.now)
-    updated_at: datetime = Field(default=None)
+    updated_at: datetime = Field(default_factory=datetime.now)
 
 
 class Tweet(SQLModel, table=True):
