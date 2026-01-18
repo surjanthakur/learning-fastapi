@@ -7,7 +7,7 @@ from router import users, tweets
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
-        create_db_and_tables()
+        await create_db_and_tables()
         print("databse connection is created 🔻")
         yield
     except Exception as err:

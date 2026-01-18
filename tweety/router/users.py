@@ -5,23 +5,24 @@ from database.sql_model import User
 from validation.pydantic_schema import pydantic_user
 from fastapi.responses import JSONResponse
 from datetime import datetime
+from sqlmodel.ext.asyncio.session import AsyncSession
 
 
-router = APIRouter(tags=["user routers"])
+router = APIRouter(tags=["users"], prefix="/users")
 
 
 # get user by their id
-@router.get("/users/{user_id}")
-def get_user_by_id(
+@router.get("/{user_id}")
+async def get_user_by_id(
     user_id: str = Path(
         ...,
         title="enter user_id",
         description="enter the user id to access information !!",
     ),
-    db: Session = Depends(get_session),
+    db: AsyncSession = Depends(get_session),
 ):
     statement = select(User).where(User.id == user_id)
-    user = db.exec(statement).first()
+    user = await db.exec(statement).first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -31,12 +32,15 @@ def get_user_by_id(
 
 
 # create new user
-@router.post("/users/create")
-def create_users(user_data: pydantic_user, db: Session = Depends(get_session)):
+@router.post("/create")
+async def create_users(
+    user_data: pydantic_user,
+    db: AsyncSession = Depends(get_session),
+):
     new_user = User(name=user_data.name, email=user_data.email)
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
+    await db.add(new_user)
+    await db.commit()
+    await db.refresh(new_user)
     return JSONResponse(
         status_code=status.HTTP_200_OK,
         content=f"user: {new_user.email} created successfullt !!",
@@ -44,18 +48,18 @@ def create_users(user_data: pydantic_user, db: Session = Depends(get_session)):
 
 
 # update user by id
-@router.put("/users/{user_id}/update")
-def update_user_by_id(
+@router.put("/{user_id}/update")
+async def update_user_by_id(
     update_data: pydantic_user,
     user_id: str = Path(
         ...,
         title="enter user_id",
         description="enter the user id to update information !!",
     ),
-    db: Session = Depends(get_session),
+    db: AsyncSession = Depends(get_session),
 ):
     statement = select(User).where(User.id == user_id)
-    user = db.exec(statement).first()
+    user = await db.exec(statement).first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -65,9 +69,9 @@ def update_user_by_id(
     for key, value in updated_dict.items():
         setattr(user, key, value)
     user.updated_at = datetime.now()
-    db.add(user)
-    db.commit()
-    db.refresh(user)
+    await db.add(user)
+    await db.commit()
+    await db.refresh(user)
     return JSONResponse(
         status_code=status.HTTP_200_OK,
         content=f"user: {user_id} updated successfully !!",
@@ -75,20 +79,20 @@ def update_user_by_id(
 
 
 # delete user by id
-@router.delete("/users/{user_id}/delete")
-def delete_user_by_id(
+@router.delete("/{user_id}/delete")
+async def delete_user_by_id(
     user_id: str = Path(..., description="enter the user id to update information !!"),
-    db: Session = Depends(get_session),
+    db: AsyncSession = Depends(get_session),
 ):
     statement = select(User).where(User.id == user_id)
-    user = db.exec(statement=statement).first()
+    user = await db.exec(statement=statement).first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="invalid user_id enter the valid user id !!",
         )
-    db.delete(user)
-    db.commit()
+    await db.delete(user)
+    await db.commit()
     return JSONResponse(
         status_code=status.HTTP_200_OK,
         content=f"user: {user_id} deleted successfully !!",
