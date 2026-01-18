@@ -1,4 +1,4 @@
-from pydantic import EmailStr
+from pydantic import EmailStr, field_validator
 from datetime import datetime
 from sqlmodel import Field, Relationship, SQLModel
 from typing import List, Optional
@@ -21,3 +21,8 @@ class Tweet(SQLModel, table=True):
     content: str = Field(min_length=10, max_length=400)
     user_id: str = Field(..., nullable=False, foreign_key="user.id", ondelete="CASCADE")
     user: Optional["User"] = Relationship(back_populates="tweets")
+
+    @field_validator("content")
+    @classmethod
+    def tansform_content(cls, value):
+        return value.title()
