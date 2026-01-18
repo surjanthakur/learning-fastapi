@@ -22,7 +22,8 @@ async def get_user_by_id(
     db: AsyncSession = Depends(get_session),
 ):
     statement = select(User).where(User.id == user_id)
-    user = await db.exec(statement).first()
+    result = await db.execute(statement=statement)
+    user = result.scalar_one_or_none()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -38,7 +39,7 @@ async def create_users(
     db: AsyncSession = Depends(get_session),
 ):
     new_user = User(name=user_data.name, email=user_data.email)
-    await db.add(new_user)
+    db.add(new_user)
     await db.commit()
     await db.refresh(new_user)
     return JSONResponse(
@@ -59,7 +60,8 @@ async def update_user_by_id(
     db: AsyncSession = Depends(get_session),
 ):
     statement = select(User).where(User.id == user_id)
-    user = await db.exec(statement).first()
+    result = await db.execute(statement)
+    user = result.scalar_one_or_none()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -69,7 +71,7 @@ async def update_user_by_id(
     for key, value in updated_dict.items():
         setattr(user, key, value)
     user.updated_at = datetime.now()
-    await db.add(user)
+    db.add(user)
     await db.commit()
     await db.refresh(user)
     return JSONResponse(
@@ -85,7 +87,8 @@ async def delete_user_by_id(
     db: AsyncSession = Depends(get_session),
 ):
     statement = select(User).where(User.id == user_id)
-    user = await db.exec(statement=statement).first()
+    result = await db.execute(statement=statement)
+    user = result.scalar_one_or_none()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
