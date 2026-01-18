@@ -5,7 +5,7 @@ class pydantic_user(BaseModel):
     name: str = Field(min_length=3, max_length=20)
     email: EmailStr = Field(unique=True)
 
-    @field_validator("email", mode="before")
+    @field_validator("email", mode="after")
     @classmethod
     def email_validator(cls, value):
         valid_domains = ["gmail.com"]
