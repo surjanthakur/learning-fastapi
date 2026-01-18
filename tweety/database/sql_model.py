@@ -22,7 +22,7 @@ class Tweet(SQLModel, table=True):
     user_id: str = Field(..., nullable=False, foreign_key="user.id", ondelete="CASCADE")
     user: Optional["User"] = Relationship(back_populates="tweets")
 
-    @field_validator("content")
+    @field_validator("content", mode="after")
     @classmethod
     def tansform_content(cls, value):
         return value.title()
