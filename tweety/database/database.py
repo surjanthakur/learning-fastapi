@@ -1,6 +1,8 @@
 # This file handles database setup, connection and session management for the Tweety app.
 from sqlmodel import SQLModel
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+from sqlmodel.ext.asyncio.session import AsyncSession
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
+
 from dotenv import load_dotenv
 import os
 from typing import AsyncGenerator

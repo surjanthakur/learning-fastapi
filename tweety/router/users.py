@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Depends, Path
 from database.database import get_session
-from sqlmodel import Session, select
+from sqlmodel import select
 from database.sql_model import User
 from validation.pydantic_schema import pydantic_user
 from fastapi.responses import JSONResponse
@@ -22,8 +22,8 @@ async def get_user_by_id(
     db: AsyncSession = Depends(get_session),
 ):
     statement = select(User).where(User.id == user_id)
-    result = await db.execute(statement=statement)
-    user = result.scalar_one_or_none()
+    result = await db.exec(statement=statement)
+    user = result.first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -60,8 +60,8 @@ async def update_user_by_id(
     db: AsyncSession = Depends(get_session),
 ):
     statement = select(User).where(User.id == user_id)
-    result = await db.execute(statement)
-    user = result.scalar_one_or_none()
+    result = await db.exec(statement)
+    user = result.first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -87,8 +87,8 @@ async def delete_user_by_id(
     db: AsyncSession = Depends(get_session),
 ):
     statement = select(User).where(User.id == user_id)
-    result = await db.execute(statement=statement)
-    user = result.scalar_one_or_none()
+    result = await db.exec(statement=statement)
+    user = result.first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
